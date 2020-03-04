@@ -38,9 +38,10 @@ class EarningsEstimatesChart @JvmOverloads constructor(
     xAxis.isEnabled = false
     setupAxis()
     setupTopMarker()
-    minOffset = 0f
+//    minOffset = 0f
 
     chartListener = this
+    onChartGestureListener = this
 
     setOnChartValueSelectedListener(this)
   }

@@ -10,30 +10,44 @@
             type="com.example.everything.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
-        <com.example.everything.widget.charts.SecondaryBarChart
-            android:id="@+id/chart2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:highlight="@{viewModel.highlight}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:values="@{viewModel.values}" />
+            android:layout_height="wrap_content"
+            tools:context=".MainActivity">
 
-        <com.example.everything.widget.charts.EarningsEstimatesChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:currency="@{viewModel.currency}"
-            app:currentAge="@{viewModel.currentAge}"
-            app:layout_constraintBottom_toTopOf="@id/chart2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:onSelectedValueChanged="@{(highlight) -> viewModel.highlightData(highlight)}"
-            app:values="@{viewModel.values}" />
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                android:text="DUMB"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.example.everything.widget.charts.SecondaryBarChart
+                android:id="@+id/chart2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:highlight="@{viewModel.highlight}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:values="@{viewModel.values}" />
+
+            <com.example.everything.widget.charts.EarningsEstimatesChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:currency="@{viewModel.currency}"
+                app:currentAge="@{viewModel.currentAge}"
+                app:layout_constraintBottom_toTopOf="@id/chart2"
+                app:layout_constraintTop_toBottomOf="@id/tv"
+                app:onSelectedValueChanged="@{(highlight) -> viewModel.highlightData(highlight)}"
+                app:values="@{viewModel.values}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
