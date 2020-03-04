@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.everything.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <com.example.everything.widget.charts.SecondaryBarChart
+            android:id="@+id/chart2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:highlight="@{viewModel.highlight}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:values="@{viewModel.values}" />
+
+        <com.example.everything.widget.charts.EarningsEstimatesChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:currency="@{viewModel.currency}"
+            app:currentAge="@{viewModel.currentAge}"
+            app:layout_constraintBottom_toTopOf="@id/chart2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onSelectedValueChanged="@{(highlight) -> viewModel.highlightData(highlight)}"
+            app:values="@{viewModel.values}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
