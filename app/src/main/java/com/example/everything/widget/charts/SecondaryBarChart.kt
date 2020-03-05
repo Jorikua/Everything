@@ -2,6 +2,7 @@ package com.example.everything.widget.charts
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import com.example.everything.R
 import com.github.mikephil.charting.charts.BarChart
@@ -46,7 +47,8 @@ class SecondaryBarChart @JvmOverloads constructor(
   }
 
   fun render(dataEntries: List<ChartValuePerYear>) {
-    val dataSet = BarDataSet(dataEntries.map { BarEntry(it.year.toFloat(), it.value.toFloat() ) }, null)
+    val dataSet =
+      BarDataSet(dataEntries.map { BarEntry(it.year.toFloat(), it.value.toFloat()) }, null)
     dataSet.color = context.getColor(R.color.colorPrimaryDark)
     dataSet.setDrawValues(false)
     dataSet.isHighlightEnabled = true
@@ -68,5 +70,10 @@ fun setValues(chart: SecondaryBarChart, values: List<ChartValuePerYear>?) {
 
 @BindingAdapter("highlight")
 fun setHighlight(chart: SecondaryBarChart, h: Highlight?) {
-  chart.highlightValue(h, false)
+  if (h == null) {
+    chart.highlightValue(null)
+    return
+  }
+  Log.d("TAGG", h.toString())
+  chart.highlightValue(h.x, 0, false)
 }
