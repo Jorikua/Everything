@@ -4,50 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.everything.MainViewModel" />
+
+        <import type="android.view.View"/>
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:animateLayoutChanges="true"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <CheckBox
+            android:id="@+id/chb"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:buttonTint="@color/green"
+            android:text="All income sources"
+            android:onCheckedChanged="@{(switch, checked) -> viewModel.onAllIncomeCheck(checked)}"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/chb"
+            android:layout_marginStart="16dp"
+            android:textSize="12sp"
+            android:checked="true"
+            android:buttonTint="@android:color/black"
+            android:onCheckedChanged="@{(switch, checked) -> viewModel.onContractsCheck(checked)}"
+            android:text="Contracts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvEarnings"
+            tools:text="glnasg"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:context=".MainActivity">
+            android:text="@{viewModel.currentAgeEarnings}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv"
-                android:layout_width="match_parent"
-                android:layout_height="1000dp"
-                android:text="DUMB"
-                android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvDelta"
+            tools:text="glnasg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:percentage="@{viewModel.earningsPercentageDelta}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.everything.widget.charts.SecondaryBarChart
-                android:id="@+id/chart2"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:highlight="@{viewModel.highlight}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:values="@{viewModel.values}" />
+        <com.example.everything.widget.charts.SecondaryBarChart
+            android:id="@+id/chart2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.contractsChecked ? View.VISIBLE : View.GONE}"
+            app:highlight="@{viewModel.highlight}"
+            app:layout_constraintBottom_toTopOf="@id/chb"
+            app:values="@{viewModel.values}" />
 
-            <com.example.everything.widget.charts.EarningsEstimatesChart
-                android:id="@+id/chart"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                app:currency="@{viewModel.currency}"
-                app:currentAge="@{viewModel.currentAge}"
-                app:layout_constraintBottom_toTopOf="@id/chart2"
-                app:layout_constraintTop_toBottomOf="@id/tv"
-                app:onSelectedValueChanged="@{(highlight) -> viewModel.highlightData(highlight)}"
-                app:values="@{viewModel.values}" />
+        <com.example.everything.widget.charts.EarningsEstimatesChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:currency="@{viewModel.currency}"
+            app:currentAge="@{viewModel.currentAge}"
+            app:layout_constraintBottom_toTopOf="@id/chart2"
+            app:layout_constraintTop_toBottomOf="@id/tvEarnings"
+            app:onSelectedValueChanged="@{(highlight) -> viewModel.highlightData(highlight)}"
+            app:values="@{viewModel.values}" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

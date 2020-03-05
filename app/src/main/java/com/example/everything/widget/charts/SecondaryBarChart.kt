@@ -2,7 +2,6 @@ package com.example.everything.widget.charts
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import com.example.everything.R
 import com.github.mikephil.charting.charts.BarChart
@@ -74,6 +73,5 @@ fun setHighlight(chart: SecondaryBarChart, h: Highlight?) {
     chart.highlightValue(null)
     return
   }
-  Log.d("TAGG", h.toString())
   chart.highlightValue(h.x, 0, false)
 }

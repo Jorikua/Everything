@@ -38,7 +38,6 @@ class EarningsEstimatesChart @JvmOverloads constructor(
     xAxis.isEnabled = false
     setupAxis()
     setupTopMarker()
-//    minOffset = 0f
 
     chartListener = this
     onChartGestureListener = this
@@ -94,7 +93,7 @@ class EarningsEstimatesChart @JvmOverloads constructor(
     styleData(previousYears)
     styleData(futureYears)
 
-    val circle = getCircle(pastEntries.last())
+    val circle = getCircle(futureEntries.first())
 
     data = LineData(listOf(previousYears, futureYears, circle))
     previousYears.isVisible = true
@@ -127,14 +126,14 @@ class EarningsEstimatesChart @JvmOverloads constructor(
     val pastValues = groupedValues[true]
     val futureValues = groupedValues[false]
 
-    pastValues?.forEach {
+    pastValues?.forEachIndexed { index, it ->
       pastEntries.add(Entry(it.year.toFloat(), it.value.toFloat()))
+      if (index == pastValues.size - 1) {
+        futureEntries.add(Entry(it.year.toFloat(), it.value.toFloat()))
+      }
     }
 
-    futureValues?.forEachIndexed { index, it ->
-      if (index == 0) {
-        pastEntries.add(Entry(it.year.toFloat(), it.value.toFloat()))
-      }
+    futureValues?.forEach {
       futureEntries.add(Entry(it.year.toFloat(), it.value.toFloat()))
     }
 
@@ -144,7 +143,6 @@ class EarningsEstimatesChart @JvmOverloads constructor(
   fun visibleShare(checked: Boolean) {
     updateData(data)
   }
-
 
   private fun getCircle(chartDataEntry: Entry): LineDataSet {
     val circleDataSet = LineDataSet(listOf(chartDataEntry), null)
